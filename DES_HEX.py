@@ -177,6 +177,15 @@ def decrypt(cipher_bits, key: str):
 
     decrypted_text = bit_array_to_str(result_bits)
     return unpad_text(decrypted_text)
+# ----------------------------- Utility: Bit <-> Binary String -----------------------------
+def bits_to_binary_string(bits):
+    """Convert list of bits (e.g., [1,0,1,1]) to string '1011'"""
+    return ''.join(str(b) for b in bits)
+
+def binary_string_to_bits(binary_str):
+    """Convert binary string '1011' to list of bits [1,0,1,1]"""
+    return [int(b) for b in binary_str if b in '01']
+
 
 
 # ----------------------------- Main Runner -----------------------------
