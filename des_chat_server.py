@@ -44,7 +44,7 @@ class DESServer:
         sender.send(f"You are the sender. Your partner is {receiver_name}.\n".encode('utf-8'))
         receiver.send(f"You are the receiver. Waiting for messages from {sender_name}...\n".encode('utf-8'))
 
-        print("[#] Chat session started.")
+        print("[#] Chat session started.\n")
 
         while True:
             try:
@@ -64,9 +64,16 @@ class DESServer:
 
                 try:
                     key_bits_str, cipher_bits_str = data.split("::", 1)
-                    # Validasi bisa dikirim ulang
+
+                    # Validasi agar tidak error parsing
                     binary_string_to_bits(key_bits_str)
                     binary_string_to_bits(cipher_bits_str)
+
+                    # 🔹 Logging kiriman dari user
+                    print(f"From : {sender_name}")
+                    print(f"Message : {cipher_bits_str[:80]}{'...' if len(cipher_bits_str) > 80 else ''}")
+                    print(f"Key : {key_bits_str}\n")
+
                 except Exception:
                     receiver.send("[!] Invalid binary format.\n".encode('utf-8'))
                     continue
@@ -101,7 +108,7 @@ class DESServer:
                 pass
         self.clients.clear()
         self.nicknames.clear()
-        print("[#] Server reset, session ended.")
+        print("[#] Server reset, session ended.\n")
 
     def start_server(self):
         """Start the server"""
